@@ -90,10 +90,10 @@ void addatpos(int pos)
         scanf("%d", &n);
         newnode->data = n;
 
-        newnode->next=temp->next;
-        newnode->prev=temp;
-        temp->next=newnode;
-        newnode->next->prev=newnode;
+        newnode->next = temp->next;
+        newnode->prev = temp;
+        temp->next = newnode;
+        newnode->next->prev = newnode;
     }
 }
 
@@ -178,6 +178,39 @@ void delete_pos(int pos)
     }
 }
 
+void delete_by_val(int val)
+{
+    struct node *temp = head;
+
+    if (head == NULL)
+    {
+        printf("\nList is empty");
+        return;
+    }
+    else
+    {
+        if (temp != NULL && temp->data == val)
+        {
+            head = head->next;
+            free(temp);
+            return;
+        }
+        while (temp != NULL && temp->data != val)
+        {
+            temp = temp->next;
+        }
+        if (temp->next == NULL)
+        {
+            temp->prev->next = NULL;
+            free(temp);
+            return;
+        }
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+        free(temp);
+    }
+}
+
 void display()
 {
     struct node *temp;
@@ -226,7 +259,7 @@ void display_reverse()
 
 int main(void)
 {
-    int option = 0, pos;
+    int option = 0, pos, val;
     do
     {
         printf("\n1.Insert from front\n"
@@ -235,9 +268,10 @@ int main(void)
                "4.delete from front\n"
                "5.delete at end\n"
                "6.delete at position\n"
-               "7.display start to end\n"
-               "8.display reverse\n"
-               "9.exit\n");
+               "7.delete by value\n"
+               "8.display start to end\n"
+               "9.display reverse\n"
+               "10.exit\n");
         printf("\nEnter your option:");
         scanf("%d", &option);
 
@@ -266,15 +300,20 @@ int main(void)
             delete_pos(pos);
             break;
         case 7:
-            display();
+            printf("\nEnter value:");
+            scanf("%d", &val);
+            delete_by_val(val);
             break;
         case 8:
-            display_reverse();
+            display();
             break;
         case 9:
+            display_reverse();
+            break;
+        case 10:
             exit(0);
         default:
             printf("\nInvalid option\n");
         }
-    } while (option != 9);
+    } while (option != 10);
 }
