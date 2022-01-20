@@ -62,7 +62,7 @@ void display()
     printf("\nNo. of likes:%d\n", temp->likes);
 }
 
-int swap(struct node *x, struct node *y)
+void swap(struct node *x, struct node *y)
 {
     struct node temp = *x;
     x->likes = y->likes;
