@@ -66,8 +66,8 @@ void infixtopostfix(char inf[], char post[])
     while (stack[top] != '#')
     {
         post[j++] = pop();
-        post[j] = '\0';
     }
+    post[j] = '\0';
 }
 int main(void)
 {
